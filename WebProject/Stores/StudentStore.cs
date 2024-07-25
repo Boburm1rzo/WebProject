@@ -5,11 +5,39 @@ namespace WebProject.Store
 {
     public class StudentStore
     {
-        private static readonly List<Student> _students = [];
-        public List<Student> Get()=>_students.ToList();
+        private static readonly List<Student> _students;
+         static StudentStore()
+        {
+            _students = new List<Student>()
+            {
+                new Student()
+                {
+                    Id=1,
+                    FirstName="John",
+                    LastName="Doe",
+                    Grade=5
+                },
+                new Student()
+                {
+                    Id=2,
+                    FirstName="Steve",
+                    LastName="Jobs",
+                    Grade=3
+                }
+            };
+        }
+        public List<Student> Get(string? search)
+        {
+            if(string.IsNullOrWhiteSpace(search))
+            {
+                return [.. _students];
+            }
+
+            return [.. _students];
+        }    
         public Student GetById(int id)
         {
-            if(!FindStudent(out var student,id))
+            if (!FindStudent(out var student, id))
             {
                 throw new DataNotFoundException($"Student with id:{id} is not found");
             }
@@ -22,7 +50,7 @@ namespace WebProject.Store
         }
         public void Delete(int id)
         {
-            if (FindStudent(out var student ,id))
+            if (FindStudent(out var student, id))
             {
                 throw new DataNotFoundException($"Student with id:{id} is not found");
             }
@@ -32,7 +60,7 @@ namespace WebProject.Store
         {
             ArgumentNullException.ThrowIfNull(student);
             var index = _students.FindIndex(x => x.Id == student.Id);
-            if (index<0)
+            if (index < 0)
             {
                 throw new DataNotFoundException($"Student with id:{student.Id} is not found");
             }
