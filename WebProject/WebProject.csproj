@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="26.2.4" />
+    <PackageReference Include="Syncfusion.Licensing" Version="26.2.4" />
   </ItemGroup>
 
 </Project>

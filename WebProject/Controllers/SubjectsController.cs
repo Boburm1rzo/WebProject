@@ -1,40 +1,39 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebProject.Models;
 using WebProject.Store;
 
 namespace WebProject.Controllers
 {
-    public class StudentController : Controller
+    public class SubjectsController : Controller
     {
-        private  readonly StudentStore _store;
-        public StudentController()
+        private readonly SubjectsStore _subjectsStore;
+        public SubjectsController() 
         {
-            _store = new StudentStore();
+            _subjectsStore = new SubjectsStore();
         }
-        public ActionResult Index()
+        public ActionResult Index(string? search)
         {
-            return View(_store.Get());
-        }
+            var subjects = _subjectsStore.Get(search);
+            ViewBag.Subjects = subjects;
 
+            return View(subjects);
+        }
         public ActionResult Details(int id)
         {
-            return View(_store.GetById(id));
+            return View(_subjectsStore.GetById(id));
         }
-
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: StudentController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Student student)
+        public ActionResult Create(Subject subject)
         {
             try
             {
-                _store.Add(student);
+                _subjectsStore.Add(subject);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -45,17 +44,17 @@ namespace WebProject.Controllers
 
         public ActionResult Edit(int id)
         {
-            var student= _store.GetById(id);
-            return View(student);
+            var subject=_subjectsStore.GetById(id);
+            return View(subject);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id,Student student)
+        public ActionResult Edit(int id,Subject subject)
         {
             try
             {
-                _store.Update(student);
+                _subjectsStore.Update(subject);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -66,8 +65,8 @@ namespace WebProject.Controllers
 
         public ActionResult Delete(int id)
         {
-            var student=_store.GetById(id);
-            return View(student);
+            var subject= _subjectsStore.GetById(id);
+            return View(subject);
         }
 
         [HttpPost]
@@ -76,7 +75,7 @@ namespace WebProject.Controllers
         {
             try
             {
-                _store.Delete(id);
+                _subjectsStore.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
