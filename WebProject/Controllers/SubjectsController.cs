@@ -7,7 +7,7 @@ namespace WebProject.Controllers
     public class SubjectsController : Controller
     {
         private readonly SubjectsStore _subjectsStore;
-        public SubjectsController() 
+        public SubjectsController()
         {
             _subjectsStore = new SubjectsStore();
         }
@@ -18,10 +18,12 @@ namespace WebProject.Controllers
 
             return View(subjects);
         }
+
         public ActionResult Details(int id)
         {
             return View(_subjectsStore.GetById(id));
         }
+
         public ActionResult Create()
         {
             return View();
@@ -33,8 +35,13 @@ namespace WebProject.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return ValidationProblem(ModelState);
+                }
+
                 _subjectsStore.Add(subject);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new {id = subject.Id});
             }
             catch
             {
@@ -44,13 +51,13 @@ namespace WebProject.Controllers
 
         public ActionResult Edit(int id)
         {
-            var subject=_subjectsStore.GetById(id);
+            var subject = _subjectsStore.GetById(id);
             return View(subject);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id,Subject subject)
+        public ActionResult Edit(int id, Subject subject)
         {
             try
             {
@@ -65,7 +72,7 @@ namespace WebProject.Controllers
 
         public ActionResult Delete(int id)
         {
-            var subject= _subjectsStore.GetById(id);
+            var subject = _subjectsStore.GetById(id);
             return View(subject);
         }
 

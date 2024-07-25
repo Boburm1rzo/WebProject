@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebProject.Models;
 using WebProject.Store;
 
@@ -7,14 +6,14 @@ namespace WebProject.Controllers
 {
     public class StudentController : Controller
     {
-        private  readonly StudentStore _store;
+        private readonly StudentStore _store;
         public StudentController()
         {
             _store = new StudentStore();
         }
         public ActionResult Index()
         {
-            return View(_store.Get());
+            return View(_store.Get(""));
         }
 
         public ActionResult Details(int id)
@@ -45,13 +44,13 @@ namespace WebProject.Controllers
 
         public ActionResult Edit(int id)
         {
-            var student= _store.GetById(id);
+            var student = _store.GetById(id);
             return View(student);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id,Student student)
+        public ActionResult Edit(int id, Student student)
         {
             try
             {
@@ -66,7 +65,7 @@ namespace WebProject.Controllers
 
         public ActionResult Delete(int id)
         {
-            var student=_store.GetById(id);
+            var student = _store.GetById(id);
             return View(student);
         }
 
