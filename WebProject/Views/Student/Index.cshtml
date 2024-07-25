@@ -3,12 +3,16 @@
 @{
     ViewData["Title"] = "Index";
 }
+<form class="d-flex justify-content-between">
+    <div class="d-flex">
+        <input type="search" placeholder="Search" name="search" />
+        <button class="btn btn-secondary" type="submit">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <a class="btn btn-success" asp-action="Create">Create New</a>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -50,4 +54,4 @@
         </tr>
 }
     </tbody>
-</table>
+</table> 
