@@ -1,4 +1,7 @@
-﻿namespace WebProject.Models
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace WebProject.Models
 {
     public class Subject
     {
@@ -8,6 +11,8 @@
         public decimal Price { get; set; }
         public decimal Discount { get; set; }
         public double Rating { get; set; }
+
+        [DisplayName("Number of Modules")]
         public int NumberOfModules { get; set; }
     }
 }
