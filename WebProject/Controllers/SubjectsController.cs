@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebProject.Models;
 using WebProject.Store;
+using Syncfusion.EJ2.Grids;
 
 namespace WebProject.Controllers
 {
@@ -14,9 +15,8 @@ namespace WebProject.Controllers
         public ActionResult Index(string? search)
         {
             var subjects = _subjectsStore.Get(search);
-            ViewBag.Subjects = subjects;
-
-            return View(subjects);
+            ViewBag.datasource = subjects;
+            return View();
         }
 
         public ActionResult Details(int id)

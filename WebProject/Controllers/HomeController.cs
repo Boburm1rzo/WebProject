@@ -15,6 +15,17 @@ namespace WebProject.Controllers
 
         public IActionResult Index()
         {
+            List<ChartData> chartData = new List<ChartData>
+            {
+                new ChartData { xValue = "2014", yValue = 21 },
+                new ChartData { xValue = "2015", yValue = 24 },
+                new ChartData { xValue = "2016", yValue = 36 },
+                new ChartData { xValue = "2017", yValue = 38 },
+                new ChartData { xValue = "2018", yValue = 54 },
+                new ChartData { xValue = "2019", yValue = 57 },
+                new ChartData { xValue = "2020", yValue = 70 },
+            };
+            ViewBag.dataSource = chartData;
             return View();
         }
 
@@ -28,5 +39,10 @@ namespace WebProject.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+    }
+    public class ChartData
+    {
+        public string xValue;
+        public double yValue;
     }
 }

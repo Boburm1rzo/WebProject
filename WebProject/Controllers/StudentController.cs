@@ -11,14 +11,16 @@ namespace WebProject.Controllers
         {
             _store = new StudentStore();
         }
-        public ActionResult Index()
+        public ActionResult Index(string? search)
         {
-            return View(_store.Get(""));
+            var students = _store.Get(search);
+            return View(students);
         }
 
         public ActionResult Details(int id)
         {
-            return View(_store.GetById(id));
+            var student = _store.GetById(id);
+            return View(student);
         }
 
         public ActionResult Create()
