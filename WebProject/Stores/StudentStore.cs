@@ -6,6 +6,7 @@ namespace WebProject.Store
     public class StudentStore
     {
         private static readonly List<Student> _students;
+        private static int _id;
          static StudentStore()
         {
             _students = new List<Student>()
@@ -25,6 +26,7 @@ namespace WebProject.Store
                     Grade=3
                 }
             };
+            _id = 3;
         }
         public List<Student> Get(string? search)
         {
@@ -32,8 +34,10 @@ namespace WebProject.Store
             {
                 return [.. _students];
             }
+            var filteredStudents = _students.Where(x => x.LastName.Contains(search,StringComparison.InvariantCultureIgnoreCase)||
+            x.FirstName.Contains(search,StringComparison.InvariantCultureIgnoreCase));
 
-            return [.. _students];
+            return filteredStudents.ToList();
         }    
         public Student GetById(int id)
         {
@@ -46,11 +50,12 @@ namespace WebProject.Store
         public void Add(Student student)
         {
             ArgumentNullException.ThrowIfNull(student);
+            student.Id= _id++;
             _students.Add(student);
         }
         public void Delete(int id)
         {
-            if (FindStudent(out var student, id))
+            if (!FindStudent(out var student, id))
             {
                 throw new DataNotFoundException($"Student with id:{id} is not found");
             }
