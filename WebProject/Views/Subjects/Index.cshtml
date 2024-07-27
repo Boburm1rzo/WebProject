@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebProject.Models.Subject>
+﻿@model IEnumerable<WebProject.ViewModels.Course.CourseView>
 
 @{
     ViewData["Title"] = "Subjects List";
@@ -6,7 +6,7 @@
 
     <form class="d-flex justify-content-between">
         <div class="d-flex">
-            <input type="search" placeholder="Search" name="search" />
+            <input type="search" placeholder="Search" name="search" value="@ViewBag.Search" />
             <button class="btn btn-outline-primary" type="submit">
             <i class="bi bi-search"></i>
             </button>
@@ -15,11 +15,11 @@
         <a class="btn btn-success" asp-action="Create">Create New</a>
     </form>
 
-<div class="control-section" >
-    <ejs-grid id="Grid" dataSource="ViewBag.dataSource" allowPaging="true">
+<div class="control-section mt-5" >
+    <ejs-grid id="Grid" dataSource="@Model" allowPaging="true">
         <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
         <e-grid-columns>
-            <e-grid-column field="Id" headerText="Id" textAlign="Left" maxWidth="20" width="auto"/>
+            <e-grid-column field="Id" headerText="Id" textAlign="Left" maxWidth="20" width="auto" template="#navigation-template"/>
             <e-grid-column field="Name" headerText="Subject Name" width="100" />
             <e-grid-column field="Description" headerText="Description" width="250" />
             <e-grid-column field="Price" headerText="Price" width="100" />
@@ -29,3 +29,9 @@
         </e-grid-columns>
     </ejs-grid>
 </div>
+
+<script id="navigation-template" type="text/x-template">
+    <div>
+        <a rel="nofollow" href="subjects/details/${Id}">${Id}</a>
+    </div>
+</script>

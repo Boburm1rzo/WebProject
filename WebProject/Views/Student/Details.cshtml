@@ -1,4 +1,4 @@
-﻿@model WebProject.Models.Student
+﻿@model University.Domain.Entities.Student
 
 @{
     ViewData["Title"] = "Details";
@@ -27,12 +27,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Grade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Grade)
         </dd>
     </dl>
 </div>
