@@ -24,8 +24,14 @@ namespace WebProject.Controllers
                 new ChartData { xValue = "2018", yValue = 54 },
                 new ChartData { xValue = "2019", yValue = 57 },
                 new ChartData { xValue = "2020", yValue = 70 },
+                new ChartData { xValue = "2021", yValue = 75 },
+                new ChartData { xValue = "2022", yValue = 78 },
+                new ChartData { xValue = "2023", yValue = 90 },
+                new ChartData { xValue = "2024", yValue = 93 },
             };
+
             ViewBag.dataSource = chartData;
+
             return View();
         }
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebProject.Models;
+using University.Domain.Entities;
 using WebProject.Store;
 
 namespace WebProject.Controllers

@@ -1,94 +1,106 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebProject.Models;
+using University.Domain.Entities;
+using WebProject.Extensions;
 using WebProject.Store;
-using Syncfusion.EJ2.Grids;
+using WebProject.ViewModels.Course;
 
-namespace WebProject.Controllers
+namespace WebProject.Controllers;
+
+public class SubjectsController : Controller
 {
-    public class SubjectsController : Controller
+    private readonly CoursesStore _courseStore;
+
+    public SubjectsController()
     {
-        private readonly SubjectsStore _subjectsStore;
-        public SubjectsController()
+        _courseStore = new CoursesStore();
+    }
+
+    public ActionResult Index(string? search)
+    {
+        var subjects = _courseStore.Get(search);
+        var subjectViews = subjects.Select(x => x.ToView());
+
+        ViewBag.Search = search;
+
+        return View(subjectViews);
+    }
+
+    public ActionResult Details(int id)
+    {
+        var subject = _courseStore.GetById(id);
+        var subjectView = subject.ToView();
+
+        return View(subjectView);
+    }
+
+    public ActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Create(CreateCourseView course)
+    {
+        try
         {
-            _subjectsStore = new SubjectsStore();
+            if (!ModelState.IsValid)
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            var entity = course.ToEntity();
+            _courseStore.Add(entity);
+            return RedirectToAction(nameof(Details), new { id = entity.Id });
         }
-        public ActionResult Index(string? search)
+        catch
         {
-            var subjects = _subjectsStore.Get(search);
-            ViewBag.datasource = subjects;
             return View();
         }
+    }
 
-        public ActionResult Details(int id)
+    public ActionResult Edit(int id)
+    {
+        var subject = _courseStore.GetById(id);
+        var subjectView = subject.ToUpdateView();
+
+        return View(subjectView);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Edit(int id, UpdateCourseView view)
+    {
+        try
         {
-            return View(_subjectsStore.GetById(id));
+            var entity = view.ToEntity();
+            _courseStore.Update(entity);
+            return RedirectToAction(nameof(Index));
         }
-
-        public ActionResult Create()
+        catch
         {
             return View();
         }
+    }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Subject subject)
+    public ActionResult Delete(int id)
+    {
+        var subject = _courseStore.GetById(id);
+        return View(subject);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Delete(int id, IFormCollection collection)
+    {
+        try
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return ValidationProblem(ModelState);
-                }
-
-                _subjectsStore.Add(subject);
-                return RedirectToAction(nameof(Details), new {id = subject.Id});
-            }
-            catch
-            {
-                return View();
-            }
+            _courseStore.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
-
-        public ActionResult Edit(int id)
+        catch
         {
-            var subject = _subjectsStore.GetById(id);
-            return View(subject);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Subject subject)
-        {
-            try
-            {
-                _subjectsStore.Update(subject);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Delete(int id)
-        {
-            var subject = _subjectsStore.GetById(id);
-            return View(subject);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                _subjectsStore.Delete(id);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
     }
 }
