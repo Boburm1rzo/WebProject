@@ -1,116 +1,84 @@
-﻿using WebProject.Exceptions;
-using WebProject.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using University.Domain.Entities;
+using University.Domain.Exceptions;
+using University.Infrastructure;
+using WebProject.Exceptions;
 
-namespace WebProject.Store
+namespace WebProject.Store;
+
+public class CoursesStore
 {
-    public class SubjectsStore
+    public List<Course> Get(string? search)
     {
-        private static readonly List<Subject> _subjects;
-        private static int _id;
+        using var context = new UniversityDbContext();
 
-        static SubjectsStore()
+        var query = context.Courses.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
         {
-            _subjects = new List<Subject>();
-            _subjects.Add(new Subject()
-            {
-                Id = 1,
-                Name = "C#/.NET",
-                Description = "Fundamentals of .NET Development.",
-                Price = 1500,
-                Discount = 0,
-                NumberOfModules = 12,
-                Rating = 5
-            });
-            _subjects.Add(new Subject()
-            {
-                Id = 2,
-                Name = "JavaScript",
-                Description = "Fundamentals of Web Development with JavaScript.",
-                Price = 1400,
-                Discount = 15,
-                NumberOfModules = 10,
-                Rating = 4.5
-            });
-            _id = 3;
+            query = query.Where(x => x.Name.Contains(search) ||
+                (x.Description != null && x.Description.Contains(search)));
         }
 
-        public List<Subject> Get(string? search)
+        return query.AsNoTracking().ToList();
+    }
+
+    public Course GetById(int id)
+    {
+        using var context = new UniversityDbContext();
+
+        var course = context.Courses
+            .AsNoTracking()
+            .FirstOrDefault(x => x.Id == id);
+
+        if (course is null)
         {
-            if (string.IsNullOrWhiteSpace(search))
-            {
-                return [.. _subjects];
-            }
-
-            var filteredSubjects = _subjects.Where(x => x.Name.Contains(search, StringComparison.InvariantCultureIgnoreCase) ||
-                (x.Description != null && x.Description.Contains(search, StringComparison.InvariantCultureIgnoreCase)));
-
-            return filteredSubjects.ToList();
+            throw new EntityNotFoundException($"Course with id: {id} does not exist.");
         }
 
-        public Subject GetById(int id)
+        return course;
+    }
+
+    public void Add(Course course)
+    {
+        ValidateCourse(course);
+
+        using var context = new UniversityDbContext();
+       
+        context.Courses.Add(course);
+        context.SaveChanges();
+    }
+
+    public void Update(Course course)
+    {
+        ValidateCourse(course);
+
+        using var context = new UniversityDbContext();
+
+        context.Update(course);
+        context.SaveChanges();
+    }
+
+    public void Delete(int id)
+    {
+        using var context = new UniversityDbContext();
+        var course = context.Courses.FirstOrDefault(x => x.Id == id);
+
+        if (course is null)
         {
-            if (!TryGet(out var subject, id))
-            {
-                throw new DataNotFoundException($"Subject with id:{id} is not found");
-            }
-            return subject;
+            throw new EntityNotFoundException($"Course with id: {id} does not exist.");
         }
 
-        public void Add(Subject subject)
+        context.Courses.Remove(course);
+    }
+
+    private static void ValidateCourse(Course Course)
+    {
+        ArgumentNullException.ThrowIfNull(Course);
+
+        if (Course.Price < 1)
         {
-            ValidateSubject(subject);
-            subject.Id = _id++;
-
-            _subjects.Add(subject);
-        }
-
-        public void Update(Subject subject)
-        {
-            ValidateSubject(subject);
-
-            var index = _subjects.FindIndex(x => x.Id == subject.Id);
-            
-            if (index < 0)
-            {
-                throw new DataNotFoundException($"Subject with id:{subject.Id} is not found");
-            }
-
-            _subjects[index] = subject;
-        }
-
-        public void Delete(int id)
-        {
-            if (!TryGet(out var subject, id))
-            {
-                throw new DataNotFoundException($"Subject with id:{id} is not found");
-            }
-
-            _subjects.Remove(subject);
-        }
-
-        private static void ValidateSubject(Subject subject)
-        {
-            ArgumentNullException.ThrowIfNull(subject);
-
-            if (subject.Price < 1)
-            {
-                throw new InvalidPriceException("Price must be greater than 0");
-            }
-        }
-
-        private static bool TryGet(out Subject subject, int id)
-        {
-            var element = _subjects.Find(x => x.Id == id);
-
-            if (element is null)
-            {
-                subject = new();
-                return false;
-            }
-            
-            subject = element;
-            
-            return true;
+            throw new InvalidPriceException("Price must be greater than 0");
         }
     }
 }
