@@ -1,0 +1,35 @@
+﻿@model IEnumerable<University.Domain.Entities.Mentor>
+
+@{
+    ViewData["Title"] = "Mentors";
+}
+
+<form class="d-flex justify-content-between">
+    <div class="d-flex">
+        <input type="search" placeholder="Search" name="search" />
+        <button class="btn btn-success" type="submit">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+
+    <a class="btn btn-success" asp-action="Create">Create New</a>
+</form>
+
+<div class="control-section mt-5">
+    <ejs-grid id="Grid" dataSource="@Model" allowPaging="true">
+        <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+        <e-grid-columns>
+            <e-grid-column field="Id" headerText="Id" textAlign="Left" width="50" template="#navigation-template" />
+            <e-grid-column field="FirstName" headerText="First Name" width="100" />
+            <e-grid-column field="LastName" headerText="Last Name" width="250" />
+            <e-grid-column field="PhoneNumber" headerText="Phone Number" width="100" />
+            <e-grid-column field="Degree" headerText="Degree" width="100" />
+        </e-grid-columns>
+    </ejs-grid>
+</div>
+
+<script id="navigation-template" type="text/x-template">
+    <div>
+        <a rel="nofollow" href="mentor/details/${Id}">${Id}</a>
+    </div>
+</script>
