@@ -1,47 +1,44 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebProject.ViewModels.Student;
-using WebProject.Store;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using University.Domain.Entities;
-using WebProject.Extensions;
+using University.Infrastructure;
+using WebProject.Stores;
 
 namespace WebProject.Controllers
 {
-    public class StudentController : Controller
+    public class MentorController : Controller
     {
-        private readonly StudentStore _store;
-        public StudentController()
+        private readonly MentorStore _store;
+        public MentorController()
         {
-            _store = new StudentStore();
+            _store = new MentorStore();   
         }
-        public ActionResult Index(string? search)
+        // GET: MentorController
+        public ActionResult Index()
         {
-            var students = _store.Get(search);
-            
-            var studentsView = students.Select(x => x.ToView());
+            var mentors = _store.Get();
 
-            ViewBag.Search = search;
-
-            return View(studentsView);
+            return View(mentors);
         }
 
+        // GET: MentorController/Details/5
         public ActionResult Details(int id)
         {
-            var student = _store.GetById(id);
+            var mentor= _store.GetById(id);
 
-            var studentView=student.ToView();
-
-            return View(studentView);
+            return View(mentor);
         }
 
+        // GET: MentorController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: StudentController/Create
+        // POST: MentorController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(StudentCreateView student)
+        public ActionResult Create(Mentor mentor)
         {
             try
             {
@@ -49,34 +46,7 @@ namespace WebProject.Controllers
                 {
                     return ValidationProblem(ModelState);
                 }
-                
-                var entity=student.ToEntity();
-                _store.Add(entity);
-                
-                return RedirectToAction(nameof(Index),new {id=entity.Id});
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Edit(int id)
-        {
-            var student = _store.GetById(id);
-            var studentView = student.ToUpdateView();
-
-            return View(studentView);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, StudentUpdateView view)
-        {
-            try
-            {
-                var entity=view.ToEntity();
-                _store.Update(entity);
+                _store.Add(mentor);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -86,12 +56,40 @@ namespace WebProject.Controllers
             }
         }
 
-        public ActionResult Delete(int id)
+        // GET: MentorController/Edit/5
+        public ActionResult Edit(int id)
         {
-            var student = _store.GetById(id);
-            return View(student);
+            var mentor = _store.GetById(id);    
+
+            return View(mentor);
         }
 
+        // POST: MentorController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, Mentor mentor)
+        {
+            try
+            {
+                _store.Update(mentor);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: MentorController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            var mentor = _store.GetById(id);
+
+            return View(mentor);
+        }
+
+        // POST: MentorController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

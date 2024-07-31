@@ -1,47 +1,44 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebProject.ViewModels.Student;
-using WebProject.Store;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using University.Domain.Entities;
-using WebProject.Extensions;
+using WebProject.Stores;
 
 namespace WebProject.Controllers
 {
-    public class StudentController : Controller
+    public class GroupController : Controller
     {
-        private readonly StudentStore _store;
-        public StudentController()
+        private readonly GroupStore _store;
+        public GroupController()
         {
-            _store = new StudentStore();
+            _store= new GroupStore();   
         }
-        public ActionResult Index(string? search)
+        // GET: GroupController
+        public ActionResult Index()
         {
-            var students = _store.Get(search);
+            var groups = _store.Get();
+         
+            return View(groups);
             
-            var studentsView = students.Select(x => x.ToView());
-
-            ViewBag.Search = search;
-
-            return View(studentsView);
         }
 
+        // GET: GroupController/Details/5
         public ActionResult Details(int id)
         {
-            var student = _store.GetById(id);
+            var group =_store.GetById(id);
 
-            var studentView=student.ToView();
-
-            return View(studentView);
+            return View(group);
         }
 
+        // GET: GroupController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: StudentController/Create
+        // POST: GroupController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(StudentCreateView student)
+        public ActionResult Create(Group group )
         {
             try
             {
@@ -49,11 +46,10 @@ namespace WebProject.Controllers
                 {
                     return ValidationProblem(ModelState);
                 }
-                
-                var entity=student.ToEntity();
-                _store.Add(entity);
-                
-                return RedirectToAction(nameof(Index),new {id=entity.Id});
+
+                _store.Add(group);
+                    
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -61,22 +57,22 @@ namespace WebProject.Controllers
             }
         }
 
+        // GET: GroupController/Edit/5
         public ActionResult Edit(int id)
         {
-            var student = _store.GetById(id);
-            var studentView = student.ToUpdateView();
+            var group=_store.GetById(id);
 
-            return View(studentView);
+            return View(group);
         }
 
+        // POST: GroupController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, StudentUpdateView view)
+        public ActionResult Edit(int id, Group group)
         {
             try
             {
-                var entity=view.ToEntity();
-                _store.Update(entity);
+                _store.Update(group);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -86,12 +82,15 @@ namespace WebProject.Controllers
             }
         }
 
+        // GET: GroupController/Delete/5
         public ActionResult Delete(int id)
         {
-            var student = _store.GetById(id);
-            return View(student);
+            var group =_store.GetById(id);
+
+            return View(group);
         }
 
+        // POST: GroupController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

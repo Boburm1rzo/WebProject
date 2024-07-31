@@ -19,7 +19,7 @@ public class SubjectsController : Controller
     {
         var subjects = _courseStore.Get(search);
         var subjectViews = subjects.Select(x => x.ToView());
-
+            
         ViewBag.Search = search;
 
         return View(subjectViews);
