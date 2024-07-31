@@ -70,6 +70,7 @@ public class CoursesStore
         }
 
         context.Courses.Remove(course);
+        context.SaveChanges();
     }
 
     private static void ValidateCourse(Course Course)
