@@ -1,5 +1,7 @@
-﻿using University.Domain.Entities;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using University.Domain.Entities;
 using WebProject.ViewModels.Course;
+using WebProject.ViewModels.Student;
 
 namespace WebProject.Extensions;
 
@@ -52,4 +54,5 @@ public static class CourseMappings
 
         return entity;
     }
+   
 }
