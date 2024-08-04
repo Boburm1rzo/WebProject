@@ -2,9 +2,9 @@
 using University.Domain.Entities;
 using University.Domain.Exceptions;
 using University.Infrastructure;
-using WebProject.Exceptions;
+using University.Exceptions;
 
-namespace WebProject.Store;
+namespace University.Store;
 
 public class CoursesStore
 {
@@ -44,7 +44,7 @@ public class CoursesStore
         ValidateCourse(course);
 
         using var context = new UniversityDbContext();
-       
+
         context.Courses.Add(course);
         context.SaveChanges();
     }

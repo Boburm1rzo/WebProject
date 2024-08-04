@@ -1,30 +1,30 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using University.Domain.Entities;
 using University.Infrastructure;
-using WebProject.Exceptions;
+using University.Exceptions;
 
-namespace WebProject.Stores
+namespace University.Stores
 {
     public class MentorStore
     {
         public List<Mentor> Get()
         {
             using var context = new UniversityDbContext();
-            
-            var query=context.Mentors.AsQueryable();
+
+            var query = context.Mentors.AsQueryable();
 
             return query.AsNoTracking().ToList();
         }
         public Mentor GetById(int id)
         {
-            using var context=new UniversityDbContext();
-            var mentor=context.Mentors.AsNoTracking().FirstOrDefault(x=>x.Id==id);
+            using var context = new UniversityDbContext();
+            var mentor = context.Mentors.AsNoTracking().FirstOrDefault(x => x.Id == id);
 
-            if(mentor is null)
+            if (mentor is null)
             {
                 throw new DataNotFoundException($"Mentor with id:{id} is not found");
             }
-             
+
             return mentor;
         }
         public void Add(Mentor mentor)
@@ -40,7 +40,7 @@ namespace WebProject.Stores
         {
             ArgumentNullException.ThrowIfNull(mentor);
 
-            using var context= new UniversityDbContext();
+            using var context = new UniversityDbContext();
 
             context.Mentors.Update(mentor);
             context.SaveChanges();
@@ -48,7 +48,7 @@ namespace WebProject.Stores
         public void Delete(int id)
         {
             using var context = new UniversityDbContext();
-            var mentor =context.Mentors.FirstOrDefault(x=>x.Id==id);
+            var mentor = context.Mentors.FirstOrDefault(x => x.Id == id);
 
             if (mentor is null)
             {

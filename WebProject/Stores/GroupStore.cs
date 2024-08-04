@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using University.Domain.Entities;
+﻿using University.Domain.Entities;
 using University.Infrastructure;
-using WebProject.Exceptions;
+using University.Exceptions;
 
-namespace WebProject.Stores
+namespace University.Stores
 {
     public class GroupStore
     {
@@ -19,9 +18,9 @@ namespace WebProject.Stores
         {
             using var context = new UniversityDbContext();
 
-            var group=context.Groups.FirstOrDefault(x=>x.Id == id);
+            var group = context.Groups.FirstOrDefault(x => x.Id == id);
 
-            if(group is null)
+            if (group is null)
             {
                 throw new DataNotFoundException($"Group with id:{id} is not found");
             }
@@ -49,14 +48,14 @@ namespace WebProject.Stores
         public void Delete(int id)
         {
             using var context = new UniversityDbContext();
-             
-            var group = context.Groups.FirstOrDefault(x=>x.Id == id);
 
-            if(group is null) 
+            var group = context.Groups.FirstOrDefault(x => x.Id == id);
+
+            if (group is null)
             {
                 throw new DataNotFoundException($"Group with id:{id} is not found");
             }
-            
+
             context.Groups.Remove(group);
             context.SaveChanges();
         }

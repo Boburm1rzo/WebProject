@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using University.Domain.Entities;
 using University.Infrastructure;
-using WebProject.Exceptions;
+using University.Exceptions;
 
-namespace WebProject.Store
+namespace University.Store
 {
     public class StudentStore
     {
@@ -18,17 +18,21 @@ namespace WebProject.Store
                 query = query.Where(x => x.LastName.Contains(search) ||
                                          x.FirstName.Contains(search));
             }
-            
-            return query.AsNoTracking().ToList();
+
+            var students = query
+                .AsNoTracking()
+                .ToList();
+
+            return students;
         }
 
         public Student GetById(int id)
         {
-            using var context=new UniversityDbContext();
+            using var context = new UniversityDbContext();
 
-            var student= context.Students
+            var student = context.Students
                 .AsNoTracking()
-                .FirstOrDefault(x=>x.Id==id);
+                .FirstOrDefault(x => x.Id == id);
 
             if (student is null)
             {
@@ -42,17 +46,27 @@ namespace WebProject.Store
         {
             ArgumentNullException.ThrowIfNull(student);
 
-            using var context = new UniversityDbContext();  
+            using var context = new UniversityDbContext();
 
             context.Students.Add(student);
             context.SaveChanges();
         }
 
+        public void Update(Student student)
+        {
+            ArgumentNullException.ThrowIfNull(student);
+
+            using var context = new UniversityDbContext();
+
+            context.Students.Update(student);
+            context.SaveChanges();
+        }
+
         public void Delete(int id)
         {
-            using var context=new UniversityDbContext();    
+            using var context = new UniversityDbContext();
 
-            var student=context.Students.FirstOrDefault(x=>x.Id==id);   
+            var student = context.Students.FirstOrDefault(x => x.Id == id);
 
             if (student is null)
             {
@@ -62,16 +76,5 @@ namespace WebProject.Store
             context.Students.Remove(student);
             context.SaveChanges();
         }
-
-        public void Update(Student student)
-        {
-            ArgumentNullException.ThrowIfNull(student);
-           
-            using var context=new UniversityDbContext();
-                
-            context.Students.Update(student);
-            context.SaveChanges();
-        }
-
     }
 }
