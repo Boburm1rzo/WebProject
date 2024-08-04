@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebProject.ViewModels.Student;
-using WebProject.Store;
-using University.Domain.Entities;
-using WebProject.Extensions;
+using University.Mappings;
+using University.Store;
+using University.ViewModels.Student;
 
-namespace WebProject.Controllers
+namespace University.Controllers
 {
     public class StudentController : Controller
     {
@@ -16,7 +15,7 @@ namespace WebProject.Controllers
         public ActionResult Index(string? search)
         {
             var students = _store.Get(search);
-            
+
             var studentsView = students.Select(x => x.ToView());
 
             ViewBag.Search = search;
@@ -28,7 +27,7 @@ namespace WebProject.Controllers
         {
             var student = _store.GetById(id);
 
-            var studentView=student.ToView();
+            var studentView = student.ToView();
 
             return View(studentView);
         }
@@ -49,11 +48,11 @@ namespace WebProject.Controllers
                 {
                     return ValidationProblem(ModelState);
                 }
-                
-                var entity=student.ToEntity();
+
+                var entity = student.ToEntity();
                 _store.Add(entity);
-                
-                return RedirectToAction(nameof(Index),new {id=entity.Id});
+
+                return RedirectToAction(nameof(Index), new { id = entity.Id });
             }
             catch
             {
@@ -75,7 +74,7 @@ namespace WebProject.Controllers
         {
             try
             {
-                var entity=view.ToEntity();
+                var entity = view.ToEntity();
                 _store.Update(entity);
 
                 return RedirectToAction(nameof(Index));
@@ -89,7 +88,7 @@ namespace WebProject.Controllers
         public ActionResult Delete(int id)
         {
             var student = _store.GetById(id);
-            return View(student);
+            return View(student.ToView());
         }
 
         [HttpPost]

@@ -1,30 +1,29 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using University.Domain.Entities;
-using WebProject.Stores;
+using University.Stores;
 
-namespace WebProject.Controllers
+namespace University.Controllers
 {
     public class GroupController : Controller
     {
         private readonly GroupStore _store;
         public GroupController()
         {
-            _store= new GroupStore();   
+            _store = new GroupStore();
         }
         // GET: GroupController
         public ActionResult Index()
         {
             var groups = _store.Get();
-         
+
             return View(groups);
-            
+
         }
 
         // GET: GroupController/Details/5
         public ActionResult Details(int id)
         {
-            var group =_store.GetById(id);
+            var group = _store.GetById(id);
 
             return View(group);
         }
@@ -38,7 +37,7 @@ namespace WebProject.Controllers
         // POST: GroupController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Group group )
+        public ActionResult Create(Group group)
         {
             try
             {
@@ -48,7 +47,7 @@ namespace WebProject.Controllers
                 }
 
                 _store.Add(group);
-                    
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -60,7 +59,7 @@ namespace WebProject.Controllers
         // GET: GroupController/Edit/5
         public ActionResult Edit(int id)
         {
-            var group=_store.GetById(id);
+            var group = _store.GetById(id);
 
             return View(group);
         }
@@ -85,7 +84,7 @@ namespace WebProject.Controllers
         // GET: GroupController/Delete/5
         public ActionResult Delete(int id)
         {
-            var group =_store.GetById(id);
+            var group = _store.GetById(id);
 
             return View(group);
         }

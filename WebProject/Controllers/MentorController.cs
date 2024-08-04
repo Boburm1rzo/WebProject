@@ -1,17 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using University.Domain.Entities;
-using University.Infrastructure;
-using WebProject.Stores;
+using University.Stores;
 
-namespace WebProject.Controllers
+namespace University.Controllers
 {
     public class MentorController : Controller
     {
         private readonly MentorStore _store;
         public MentorController()
         {
-            _store = new MentorStore();   
+            _store = new MentorStore();
         }
         // GET: MentorController
         public ActionResult Index()
@@ -24,7 +22,7 @@ namespace WebProject.Controllers
         // GET: MentorController/Details/5
         public ActionResult Details(int id)
         {
-            var mentor= _store.GetById(id);
+            var mentor = _store.GetById(id);
 
             return View(mentor);
         }
@@ -59,7 +57,7 @@ namespace WebProject.Controllers
         // GET: MentorController/Edit/5
         public ActionResult Edit(int id)
         {
-            var mentor = _store.GetById(id);    
+            var mentor = _store.GetById(id);
 
             return View(mentor);
         }

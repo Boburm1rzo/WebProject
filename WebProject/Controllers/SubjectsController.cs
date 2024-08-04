@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using University.Domain.Entities;
-using WebProject.Extensions;
-using WebProject.Store;
-using WebProject.ViewModels.Course;
+using University.Extensions;
+using University.Mappings;
+using University.Store;
+using University.ViewModels.Course;
 
-namespace WebProject.Controllers;
+namespace University.Controllers;
 
 public class SubjectsController : Controller
 {
@@ -19,7 +19,7 @@ public class SubjectsController : Controller
     {
         var subjects = _courseStore.Get(search);
         var subjectViews = subjects.Select(x => x.ToView());
-            
+
         ViewBag.Search = search;
 
         return View(subjectViews);
