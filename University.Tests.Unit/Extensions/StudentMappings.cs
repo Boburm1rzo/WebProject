@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using University.Extensions;
+using University.Mappings;
 using University.ViewModels.Student;
 
 namespace University.Tests.Unit.Extensions;
