@@ -1,12 +1,15 @@
+using University.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NCaF1cWWhBYVJpR2Nbe052flZFal1UVAciSV9jS3pTcUdmWXldc3VQRGFeUQ==");
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NCaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXdedHRQRGRZWEV+WkQ=");
 
 var app = builder.Build();
 
+DatabaseInitializer.SeedDatabase();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
