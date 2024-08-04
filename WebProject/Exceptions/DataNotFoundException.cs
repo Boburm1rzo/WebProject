@@ -1,4 +1,4 @@
-﻿namespace WebProject.Exceptions
+﻿namespace University.Exceptions
 {
     public class DataNotFoundException : Exception
     {
