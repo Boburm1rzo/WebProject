@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebProject.ViewModels.Course.CourseView>
+﻿@model IEnumerable<University.ViewModels.Course.CourseView>
 
 @{
     ViewData["Title"] = "Subjects List";
@@ -22,10 +22,11 @@
             <e-grid-column field="Id" headerText="Id" textAlign="Left" width="50" template="#navigation-template"/>
             <e-grid-column field="Name" headerText="Subject Name" width="100" />
             <e-grid-column field="Description" headerText="Description" width="250" />
-            <e-grid-column field="Price" headerText="Price" width="100" />
-            <e-grid-column field="Discount" headerText="Discount"  width="100" />
-            <e-grid-column field="Rating" headerText="Rating" width="120"></e-grid-column>
+            <e-grid-column field="Price" headerText="Price" width="100" format='C2' />
+            <e-grid-column field="Discount" headerText="Discount" format='C2' width="100" />
+            <e-grid-column field="Rating" headerText="Rating" width="120" format='C2'></e-grid-column>
             <e-grid-column headerText="Details" width="100" ></e-grid-column>
+            <e-grid-column headerText="" template="#action-template"></e-grid-column>
         </e-grid-columns>
     </ejs-grid>
 </div>
@@ -34,4 +35,9 @@
     <div>
         <a rel="nofollow" href="subjects/details/${Id}">${Id}</a>
     </div>
+</script>
+<script id="action-template" type="text/x-template">
+    <a class="text-danger" rel="nofollow" href="subjects/delete/${Id}">
+        <i class="fa-solid fa-trash"/>
+    </a>
 </script>

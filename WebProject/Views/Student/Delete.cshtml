@@ -1,4 +1,4 @@
-﻿@model WebProject.ViewModels.Student.StudentView
+﻿@model University.ViewModels.Student.StudentView
 
 @{
     ViewData["Title"] = "Delete";
@@ -31,8 +31,8 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> 
+    <form asp-action="Delete" method="post">
+        <input type="submit" value="Delete" asp-route-id="@Model.Id" class="btn btn-danger" /> 
         <a class="btn btn-outline-info" asp-action="Index">Back to List</a>
     </form>
 </div>
