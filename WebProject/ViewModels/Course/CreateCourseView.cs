@@ -1,4 +1,4 @@
-﻿namespace WebProject.ViewModels.Course;
+﻿namespace University.ViewModels.Course;
 
 public class CreateCourseView
 {

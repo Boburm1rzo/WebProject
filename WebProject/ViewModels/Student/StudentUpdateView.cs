@@ -1,7 +1,7 @@
-﻿namespace WebProject.ViewModels.Student
+﻿namespace University.ViewModels.Student
 {
-    public class StudentUpdateView:StudentCreateView
+    public class StudentUpdateView : StudentCreateView
     {
-        public int Id { get; set; } 
+        public required int Id { get; set; }
     }
 }

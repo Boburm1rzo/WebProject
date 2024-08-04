@@ -1,4 +1,4 @@
-﻿namespace WebProject.ViewModels.Student
+﻿namespace University.ViewModels.Student
 {
     public class StudentView
     {
