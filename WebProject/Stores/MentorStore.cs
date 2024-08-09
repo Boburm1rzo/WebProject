@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using University.Domain.Entities;
-using University.Infrastructure;
 using University.Exceptions;
+using University.Infrastructure;
 
 namespace University.Stores
 {

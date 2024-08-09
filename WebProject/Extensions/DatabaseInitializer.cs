@@ -21,7 +21,7 @@ public class DatabaseInitializer
             AddMentorCourses(context);
             AddGroups(context);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex.ToString());
         }
@@ -36,7 +36,7 @@ public class DatabaseInitializer
 
         List<Student> students = [];
 
-        for(int i = 0; i < 100; i++)
+        for (int i = 0; i < 100; i++)
         {
             var student = new Student
             {
@@ -62,7 +62,7 @@ public class DatabaseInitializer
 
         List<Course> courses = [];
 
-        for(int i = 0; i < 20; i++)
+        for (int i = 0; i < 20; i++)
         {
             var courseName = _faker.Name.JobTitle();
             int attempts = 0;
@@ -104,7 +104,7 @@ public class DatabaseInitializer
 
         List<Mentor> mentors = [];
 
-        for(int i = 0; i < 50; i++)
+        for (int i = 0; i < 50; i++)
         {
             var mentor = new Mentor
             {
@@ -136,13 +136,13 @@ public class DatabaseInitializer
             var numberOfCourses = _faker.Random.Int(1, 4);
             HashSet<int> mentorCourses = [];
 
-            for(int i = 0; i< numberOfCourses; i++)
+            for (int i = 0; i < numberOfCourses; i++)
             {
                 var randomId = _faker.PickRandom(courseIds);
                 mentorCourses.Add(randomId);
             }
 
-            foreach(var mentorCourseId in mentorCourses)
+            foreach (var mentorCourseId in mentorCourses)
             {
                 var mentorCourse = new MentorCourse
                 {
@@ -166,7 +166,7 @@ public class DatabaseInitializer
 
         var mentors = context.MentorCourses.Select(x => x.Id).ToList();
 
-        for(int i = 0; i < 100; i++)
+        for (int i = 0; i < 100; i++)
         {
             var mentorId = _faker.PickRandom(mentors);
             var group = new Group

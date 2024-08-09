@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using University.Domain.Entities;
 using University.Domain.Exceptions;
-using University.Infrastructure;
 using University.Exceptions;
+using University.Infrastructure;
 
 namespace University.Store;
 

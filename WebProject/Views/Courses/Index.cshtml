@@ -7,8 +7,8 @@
     <form class="d-flex justify-content-between">
         <div class="d-flex">
             <input type="search" placeholder="Search" name="search" value="@ViewBag.Search" />
-            <button class="btn btn-outline-primary" type="submit">
-            <i class="bi bi-search"></i>
+        <button class="btn btn-outline-primary" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
             </button>
         </div>
 
@@ -33,11 +33,11 @@
 
 <script id="navigation-template" type="text/x-template">
     <div>
-        <a rel="nofollow" href="subjects/details/${Id}">${Id}</a>
+        <a rel="nofollow" href="courses/details/${Id}">${Id}</a>
     </div>
 </script>
 <script id="action-template" type="text/x-template">
-    <a class="text-danger" rel="nofollow" href="subjects/delete/${Id}">
+    <a class="text-danger" rel="nofollow" href="Courses/delete/${Id}">
         <i class="fa-solid fa-trash"/>
     </a>
 </script>

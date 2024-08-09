@@ -26,6 +26,7 @@
             <e-grid-column field="LastName" headerText="Last Name" width="250" />
             <e-grid-column field="Email" headerText="Email" width="100" />
             <e-grid-column field="PhoneNumber" headerText="Phone Number" width="100" />
+            <e-grid-column headerText="" template="#delete-template"></e-grid-column>
         </e-grid-columns>
     </ejs-grid>
 </div>
@@ -34,4 +35,10 @@
     <div>
         <a rel="nofollow" href="student/details/${Id}">${Id}</a>
     </div>
+</script>
+
+<script id="delete-template" type="text/x-template">
+    <a class="text-danger" rel="nofollow" href="student/delete/${Id}">
+        <i class="fa-solid fa-trash"/>
+    </a>    
 </script>

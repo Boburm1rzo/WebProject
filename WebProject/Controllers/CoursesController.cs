@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using University.Extensions;
 using University.Mappings;
 using University.Store;
 using University.ViewModels.Course;
 
 namespace University.Controllers;
 
-public class SubjectsController : Controller
+public class CoursesController : Controller
 {
     private readonly CoursesStore _courseStore;
 
-    public SubjectsController()
+    public CoursesController()
     {
         _courseStore = new CoursesStore();
     }
@@ -85,8 +84,8 @@ public class SubjectsController : Controller
 
     public ActionResult Delete(int id)
     {
-        var subject = _courseStore.GetById(id);
-        return View(subject);
+        var course = _courseStore.GetById(id);
+        return View(course);
     }
 
     [HttpPost]

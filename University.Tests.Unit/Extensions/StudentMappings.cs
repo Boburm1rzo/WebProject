@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using University.Mappings;
+﻿using University.Mappings;
 using University.ViewModels.Student;
 
 namespace University.Tests.Unit.Extensions;
@@ -21,12 +16,12 @@ public class StudentMappings
     [Fact]
     public void ShouldCorrectly_MapToEntity()
     {
-        StudentCreateView view = new StudentCreateView 
-        { 
-            FirstName = "John", 
-            LastName = "Doe", 
-            Email = "john@gmail.com", 
-            PhoneNumber = "+998914045014" 
+        StudentCreateView view = new StudentCreateView
+        {
+            FirstName = "John",
+            LastName = "Doe",
+            Email = "john@gmail.com",
+            PhoneNumber = "+998914045014"
         };
         var entity = view.ToEntity();
 
