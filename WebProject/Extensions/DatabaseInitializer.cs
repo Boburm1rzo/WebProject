@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using System.Security.Cryptography.Xml;
 using University.Domain.Entities;
 using University.Domain.Enums;
 using University.Infrastructure;
@@ -20,6 +21,7 @@ public class DatabaseInitializer
             AddMentors(context);
             AddMentorCourses(context);
             AddGroups(context);
+            AddEnrollments(context);
         }
         catch (Exception ex)
         {
@@ -178,6 +180,49 @@ public class DatabaseInitializer
             };
 
             context.Groups.Add(group);
+        }
+
+        context.SaveChanges();
+    }
+
+    private static void AddEnrollments(UniversityDbContext context)
+    {
+        if (context.Enrollments.Any())
+        {
+            return;
+        }
+
+        var groups = context.Groups.Select(x => x.Id).ToList();
+        var students = context.Students.Select(x => x.Id).ToList();
+
+        foreach(var student in students)
+        {
+            var numberOfGroups = _faker.Random.Int(1, 5);
+            for(int i = 0; i < numberOfGroups; i++)
+            {
+                int attempts = 0;
+                var randomGroupId = _faker.PickRandom(groups);
+                HashSet<int> studentGroups = new HashSet<int>();
+
+                while (studentGroups.Contains(randomGroupId) && attempts++ < 100)
+                {
+                    randomGroupId = _faker.PickRandom(groups);
+                }
+
+                if (attempts < 100)
+                {
+                    studentGroups.Add(randomGroupId);
+                }
+
+                foreach(var studentGroup in studentGroups) 
+                {
+                    context.Enrollments.Add(new Enrollment
+                    {
+                        GroupId = studentGroup,
+                        StudentId = student
+                    });
+                }
+            }
         }
 
         context.SaveChanges();
