@@ -15,6 +15,7 @@ namespace University.Stores
 
             return query.AsNoTracking().ToList();
         }
+
         public Mentor GetById(int id)
         {
             using var context = new UniversityDbContext();

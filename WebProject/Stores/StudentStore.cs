@@ -32,6 +32,14 @@ namespace University.Store
 
             var student = context.Students
                 .AsNoTracking()
+                .Include(x => x.Enrollments)
+                .ThenInclude(e => e.Group)
+                .ThenInclude(g => g.MentorSubject)
+                .ThenInclude(ms => ms.Mentor)
+                .Include(x => x.Enrollments)
+                .ThenInclude(e => e.Group)
+                .ThenInclude(g => g.MentorSubject)
+                .ThenInclude(ms => ms.Course)
                 .FirstOrDefault(x => x.Id == id);
 
             if (student is null)
