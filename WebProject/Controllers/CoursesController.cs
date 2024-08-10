@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using University.Domain.Entities;
 using University.Mappings;
 using University.Store;
 using University.ViewModels.Course;
