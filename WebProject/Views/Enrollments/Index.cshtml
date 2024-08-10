@@ -1,0 +1,57 @@
+﻿@using Newtonsoft.Json
+@model IEnumerable<University.ViewModels.Enrollment.EnrollmentViewModel>;
+
+<form class="d-flex justify-content-between">
+    <div class="d-flex">
+        <input class="ps-3" type="search" placeholder="Search" name="search" value="@ViewBag.Search" />
+        <button class="btn btn-outline-primary" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+        <div class="ms-2">
+            <ejs-combobox name="groupId" id="groups-combobox" allowFiltering="true" filtering="onfiltering" dataSource="@ViewBag.Groups" placeholder="Select a game" popupHeight="220px">
+                <e-combobox-fields value="Id" text="Name"></e-combobox-fields>
+            </ejs-combobox>
+        </div>
+    </div>
+
+    <a class="btn btn-success" asp-action="Create">
+        <i class="fa-solid fa-plus"></i>
+        Create New
+    </a>
+</form>
+
+<div class="control-section mt-3">
+    <ejs-grid id="Grid" dataSource="@Model" allowPaging="true">
+        <e-grid-pagesettings pageCount="10"></e-grid-pagesettings>
+        <e-grid-columns>
+            <e-grid-column field="Id" headerText="Id" textAlign="Left" width="100" template="#navigation-template" />
+            <e-grid-column field="Student" headerText="Student" width="300" />
+            <e-grid-column field="Group" headerText="Group" width="300" />
+            <e-grid-column headerText="" template="#delete-template"></e-grid-column>
+        </e-grid-columns>
+    </ejs-grid>
+</div>
+
+
+<script id="navigation-template" type="text/x-template">
+    <div>
+        <a rel="nofollow" href="enrollments/details/${Id}">${Id}</a>
+    </div>
+</script>
+
+<script id="delete-template" type="text/x-template">
+    <a class="text-danger" rel="nofollow" href="enrollments/delete/${Id}">
+        <i class="fa-solid fa-trash"/>
+    </a>
+</script>
+
+<script>
+    function onfiltering(e) {
+        var query = new ej.data.Query();
+        query = (e.text !== '') 
+            ? query.where('Name', 'startswith', e.text, true) 
+            : query;
+        e.updateData(@Html.Raw(JsonConvert.SerializeObject(ViewBag.Groups)), query);
+    }
+</script>
