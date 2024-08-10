@@ -35,6 +35,7 @@ public static class StudentMappings
             LastName = student.LastName,
             Email = student.Email,
             PhoneNumber = student.PhoneNumber,
+            Groups = student.Enrollments?.Select(x => x.ToGroup())?.ToList() ?? []
         };
     }
 
