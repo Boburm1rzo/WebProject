@@ -1,6 +1,10 @@
 ﻿@using Newtonsoft.Json
 @model IEnumerable<University.ViewModels.Enrollment.EnrollmentViewModel>;
 
+@{
+    ViewData["Title"] = "Enrollments";
+}
+
 <form class="d-flex justify-content-between">
     <div class="d-flex">
         <input class="ps-3" type="search" placeholder="Search" name="search" value="@ViewBag.Search" />

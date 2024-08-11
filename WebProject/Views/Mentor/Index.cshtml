@@ -22,8 +22,9 @@
             <e-grid-column field="Id" headerText="Id" textAlign="Left" width="50" template="#navigation-template" />
             <e-grid-column field="FirstName" headerText="First Name" width="100" />
             <e-grid-column field="LastName" headerText="Last Name" width="250" />
-            <e-grid-column field="PhoneNumber" headerText="Phone Number" width="100" />
+            <e-grid-column field="PhoneNumber" headerText="Phone Number" width="200" />
             <e-grid-column field="Degree" headerText="Degree" width="100" />
+            <e-grid-column headerText="" template="#delete-template"></e-grid-column>
         </e-grid-columns>
     </ejs-grid>
 </div>
@@ -31,5 +32,13 @@
 <script id="navigation-template" type="text/x-template">
     <div>
         <a rel="nofollow" href="mentor/details/${Id}">${Id}</a>
+    </div>
+</script>
+
+<script id="delete-template" type="text/x-template">
+    <div>
+        <a rel="nofollow" class="text-danger" href="mentors/delete/${Id}">
+            <i class="fa-solid fa-trash"/>    
+        </a>
     </div>
 </script>

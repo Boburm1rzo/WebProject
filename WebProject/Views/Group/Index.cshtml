@@ -18,15 +18,24 @@
 
 <div class="control-section mt-5">
     <ejs-grid id="Grid" dataSource="@Model" allowPaging="true">
-        <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+        <e-grid-pagesettings  pageCount="5"></e-grid-pagesettings>
         <e-grid-columns>
             <e-grid-column field="Id" headerText="Id" textAlign="Left" width="50" template="#navigation-template" />
             <e-grid-column field="Name" headerText="Name" width="100" />
-            <e-grid-column field="Mode" headerText="Mode" width="250" />
+            <e-grid-column field="Mode" headerText="Mode" width="100" />
             <e-grid-column field="Type" headerText="Type" width="100" />
+            <e-grid-column headerText="" template="#delete-template"></e-grid-column>
         </e-grid-columns>
     </ejs-grid>
 </div>
+
+<script id="delete-template" type="text/x-template">
+   <div >
+       <a rel="nofollow" href="group/delete/${Id}" class="text-danger">
+           <i class="fa-solid fa-trash"/>
+       </a>
+   </div>
+</script>
 
 <script id="navigation-template" type="text/x-template">
     <div>

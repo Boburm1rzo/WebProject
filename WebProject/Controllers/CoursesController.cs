@@ -17,20 +17,20 @@ public class CoursesController : Controller
 
     public ActionResult Index(string? search)
     {
-        var subjects = _courseStore.Get(search);
-        var subjectViews = subjects.Select(x => x.ToView());
+        var courses = _courseStore.Get(search);
+        var courseViews = courses.Select(x => x.ToView());
 
         ViewBag.Search = search;
 
-        return View(subjectViews);
+        return View(courseViews);
     }
 
     public ActionResult Details(int id)
     {
-        var subject = _courseStore.GetById(id);
-        var subjectView = subject.ToView();
+        var course = _courseStore.GetById(id);
+        var courseView = course.ToView();
 
-        return View(subjectView);
+        return View(courseView);
     }
 
     public ActionResult Create()
@@ -61,10 +61,10 @@ public class CoursesController : Controller
 
     public ActionResult Edit(int id)
     {
-        var subject = _courseStore.GetById(id);
-        var subjectView = subject.ToUpdateView();
+        var course = _courseStore.GetById(id);
+        var courseView = course.ToUpdateView();
 
-        return View(subjectView);
+        return View(courseView);
     }
 
     [HttpPost]

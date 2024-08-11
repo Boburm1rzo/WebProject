@@ -30,4 +30,5 @@ public static class EnrollmentMappings
             Student = enrollment.Student.FirstName + " " + enrollment.Student.LastName
         };
     }
+    
 }
